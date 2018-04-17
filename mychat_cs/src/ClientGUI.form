@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ClientGUI">
+  <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="28" width="686" height="554"/>
+    </constraints>
+    <properties>
+      <foreground color="-8750470"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="f1f65" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <font name="Courier New" size="12" style="0"/>
+          <foreground color="-8224126"/>
+          <lineWrap value="true"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
