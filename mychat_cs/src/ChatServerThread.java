@@ -24,16 +24,17 @@ public class ChatServerThread extends Thread{
         username=streamIn.readUTF();
         password=streamIn.readUTF();
 
-        if(username.equals("") && password.equals("")){
+        if(username.equals("Patrick") && password.equals("password")){
 
-            streamOut.writeUTF("Logged in.");
+            streamOut.writeBoolean(true);
+            streamOut.flush();
 
         }
 
         else{
 
-            streamOut.writeUTF("Wrong username or password. Closing in 5 seconds...");
-            wait(5000);
+            streamOut.writeBoolean(false);
+            streamOut.flush();
             close();
 
         }

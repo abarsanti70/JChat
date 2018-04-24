@@ -11,7 +11,9 @@ public class ChatClient implements Runnable{
     private String reciever=null;
     private BufferedReader T=null;
     private DataOutputStream streamOut=null;
+    private DataInputStream streamIn=null;
     private ChatClientThread client=null;
+    private boolean sl=false;
 
     //constructor for initializing the connection and verifying username and password
     public ChatClient(String serverName, int serverPort, String username, String password){
@@ -28,6 +30,16 @@ public class ChatClient implements Runnable{
             streamOut.writeUTF(username);
             streamOut.writeUTF(password);
             streamOut.flush();
+            
+            boolean a=streamIn.readBoolean();
+            System.out.println(a);
+            
+            if(!a){
+                
+                System.out.println("stopping");
+                stop();
+                
+            }
 
         }
 
@@ -78,7 +90,6 @@ public class ChatClient implements Runnable{
 
         if(msg.equals(".bye")){
 
-            System.out.println("Good bye. Press RETURN to exit ...");
             stop();
 
         }
@@ -96,6 +107,7 @@ public class ChatClient implements Runnable{
 
         T=new BufferedReader(new InputStreamReader(System.in));
         streamOut=new DataOutputStream(socket.getOutputStream());
+        streamIn=new DataInputStream(socket.getInputStream());
 
         if (thread==null){
 
@@ -109,11 +121,15 @@ public class ChatClient implements Runnable{
 
     //Method stop() interrupts the connection and closes threads
     public void stop(){
+        
+        sl=true;
 
         if (thread!=null){
 
             thread.stop();
             thread=null;
+            
+            System.out.println("Thread stopped and null");
 
         }
 
@@ -121,7 +137,7 @@ public class ChatClient implements Runnable{
 
             if(T!=null){
 
-                T.close();
+                T=null;
 
             }
 
@@ -146,27 +162,37 @@ public class ChatClient implements Runnable{
         }
 
         client.close();
+        
+        System.out.println("ChatClientThread closed");
+        
         client.stop();
+        
+        System.out.println("Thread ChatClientThread Stopped");
 
     }
-
-    public static void main(String args[]) throws IOException{
-
-        //standard di input
-        BufferedReader T=new BufferedReader(new InputStreamReader(System.in));
-
-        //creating ChatClient object
-        ChatClient client=null;
-
-        //login format
-        System.out.print("username: ");
-        String usr=T.readLine();
-        System.out.print("password: ");
-        String psw=T.readLine();
-
-        //initializing ChatClient object with username and password
-        client=new ChatClient("127.0.0.1", 1337, usr, psw);
-
+    
+    public boolean isOpen(){
+        
+        boolean a=false;
+        
+        if(T!=null){
+            
+            a=true;
+            System.out.println("ChatClient is open");
+            
+        }
+        
+        System.out.println("Returning "+a);
+        
+        return a;
+        
+    }
+    
+    public boolean stopListening(){
+        
+        System.out.println("Returning "+sl);
+        return sl;
+        
     }
 
 }
