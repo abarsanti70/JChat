@@ -4,13 +4,13 @@ import java.io.*;
 public class ChatServerThread extends Thread{
 
     //variables declaration
-    private ChatServer server =null;
+    private ChatServer server;
     private Socket socket=null;
     private String username=null;
     private String password=null;
     private String reciever=null;
-    //private final String usr="Patrick";
-    //private final String psw="password";
+    private final String usr="CIAO";
+    private final String psw="password";
     private DataInputStream streamIn=null;
     private DataOutputStream streamOut=null;
 
@@ -21,15 +21,18 @@ public class ChatServerThread extends Thread{
         server=_server;
         socket=_socket;
         open();
+        //reads username and password that are sent through socket
         username=streamIn.readUTF();
         password=streamIn.readUTF();
 
-        if(username.equals("") && password.equals("")){
+        //verifies if username & password are correct
+        if(username.equals(usr) && password.equals(psw)){
 
             streamOut.writeUTF("Logged in.");
 
         }
 
+        //if they are not closes connection
         else{
 
             streamOut.writeUTF("Wrong username or password. Closing in 5 seconds...");
@@ -40,6 +43,7 @@ public class ChatServerThread extends Thread{
 
     }
 
+    //writes the message in the parameter
     public void send(String msg){
 
         try{
@@ -59,12 +63,15 @@ public class ChatServerThread extends Thread{
 
     }
 
+    //returns current username
     public String getUsername(){
 
         return username;
 
     }
 
+
+    //method always running for thread
     public void run(){
 
         System.out.println("Server Thread "+username+" running.");
@@ -73,6 +80,7 @@ public class ChatServerThread extends Thread{
 
             try{
 
+                //handles a message (from, to, message)
                 reciever=streamIn.readUTF();
                 server.handle(username, reciever, streamIn.readUTF());
 
@@ -90,6 +98,7 @@ public class ChatServerThread extends Thread{
 
     }
 
+    //opens connection
     public void open() throws IOException{
 
         streamIn=new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -97,6 +106,7 @@ public class ChatServerThread extends Thread{
 
     }
 
+    //closes connection
     public void close() throws IOException{
 
         if(socket!=null){

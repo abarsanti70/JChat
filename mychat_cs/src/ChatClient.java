@@ -152,7 +152,7 @@ public class ChatClient implements Runnable{
 
     public static void main(String args[]) throws IOException{
 
-        //standard di input
+        //input standards
         BufferedReader T=new BufferedReader(new InputStreamReader(System.in));
 
         //creating ChatClient object
@@ -164,7 +164,8 @@ public class ChatClient implements Runnable{
         System.out.print("password: ");
         String psw=T.readLine();
 
-        //initializing ChatClient object with username and password
+        //initializing ChatClient object with the ip of the server (right now set to localhost - loopback address 127.0.0.1),
+        // port on which server is waiting for a connection (in this case port 1337), username and password.
         client=new ChatClient("127.0.0.1", 1337, usr, psw);
 
     }

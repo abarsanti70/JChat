@@ -3,11 +3,13 @@ import java.io.*;
 
 public class ChatServer implements Runnable{
 
+    //variables declaration
     private ChatServerThread clients[]=new ChatServerThread[50];
     private ServerSocket server=null;
     private Thread thread=null;
     private int clientCount=0;
 
+    //constructor initializing connection to port in parameter
     public ChatServer(int port){
 
         try{
@@ -27,6 +29,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //always running in this thread, waiting for a connection and automatically accepting it
     public void run(){
 
         while(thread!=null){
@@ -55,6 +58,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //starts thread
     public void start(){
 
         if(thread==null){
@@ -66,6 +70,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //stops thread
     public void stop(){
 
         if (thread!=null){
@@ -77,6 +82,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //returns client position in client array with username in parameter. If not present return -1
     private int findClient(String username){
 
         for(int i=0; i<clientCount; i++){
@@ -93,6 +99,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //sends a message with the sender, to the reciever
     public synchronized void handle(String sender, String reciever, String input){
 
         if(input.equals(".bye")){
@@ -110,6 +117,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //removes client with username in parameters
     public synchronized void remove(String username){
 
         int pos=findClient(username);
@@ -149,6 +157,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //creates new thread when a connection is accepted
     private void addThread(Socket socket) throws IOException, InterruptedException{
 
         if(clientCount<clients.length){
@@ -180,6 +189,7 @@ public class ChatServer implements Runnable{
 
     }
 
+    //main starting constructor and setting it to wait for connections on port 1337
     public static void main(String[] args){
 
         ChatServer server=new ChatServer(1337);
