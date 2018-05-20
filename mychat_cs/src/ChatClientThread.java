@@ -63,7 +63,7 @@ public class ChatClientThread extends Thread{
     public void run(){
 
         //Infinite cycle handling the input stream
-        while(true){
+        while(!client.stopListening()){
 
             try{
 
