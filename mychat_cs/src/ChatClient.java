@@ -39,9 +39,19 @@ public class ChatClient implements Runnable{
 
 
         catch(IOException ioe){
-
-            System.out.println("Unexpected exception: "+ioe.getMessage());
-
+            
+            if(ioe.getMessage().equals("Connection refused: connect")){
+                
+                stop();
+            
+            }
+            
+            else{
+                
+                System.out.println("Unexpected exception: "+ioe.getMessage());
+            
+            }
+        
         }
 
     }
@@ -149,6 +159,23 @@ public class ChatClient implements Runnable{
         client.stop();
 
     }
+    
+    public boolean isOpen(){
+        
+        if(thread==null){
+            
+            return false;
+            
+        }
+        
+        else{
+            
+            return true;
+            
+        }
+        
+    }
+  
 
     public static void main(String args[]) throws IOException{
 

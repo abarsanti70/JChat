@@ -141,11 +141,11 @@ public class ClientGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(login_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 502, Short.MAX_VALUE)
+            .addComponent(login_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(login_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(login_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -186,7 +186,8 @@ public class ClientGUI extends javax.swing.JFrame {
             
             if(client.isOpen()){
                 
-                chatsFrame = new ChatsFrame();
+                chatsFrame=new ChatsFrame();
+                chatsFrame.setVisible(true);
             
                 setVisible(false);
                 

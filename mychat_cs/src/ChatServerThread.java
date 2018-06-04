@@ -9,7 +9,7 @@ public class ChatServerThread extends Thread{
     private String username=null;
     private String password=null;
     private String reciever=null;
-    private final String usr="CIAO";
+    private final String usr="admin";
     private final String psw="password";
     private DataInputStream streamIn=null;
     private DataOutputStream streamOut=null;
@@ -25,19 +25,18 @@ public class ChatServerThread extends Thread{
         username=streamIn.readUTF();
         password=streamIn.readUTF();
 
-        //verifies if username & password are correct
-        if(username.equals(usr) && password.equals(psw)){
+        //verifies if username & password are incorrect
+        if(!username.equals(usr) || !password.equals(psw)){
 
-            streamOut.writeUTF("Logged in.");
+            streamOut.writeUTF("Wrong username or password. Closing in 5 seconds...");
+            close();
 
         }
 
-        //if they are not closes connection
+        //if they are not doesn't close connection
         else{
 
-            streamOut.writeUTF("Wrong username or password. Closing in 5 seconds...");
-            wait(5000);
-            close();
+            streamOut.writeUTF("Logged in.");
 
         }
 
